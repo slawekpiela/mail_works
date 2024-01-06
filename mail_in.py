@@ -8,14 +8,19 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 from configuration import sender_passwords, user_mail, airtable_token, base_id, table_id2
 
-def convert_time(time2convert):
-    try
-     timeconverted= datetime.strptime(time2convert, '%a, %d %b %Y %H:%M:%S %z')
-    except
-     sender_passwords
+
+def convert_time(
+        time2convert):  # time conversion to airtable date format. if problemtic 2000-01-01 00:00:00+00:00 is assigned
+    timeconverted = ''
+    try:
+        timeconverted = datetime.strptime(time2convert, '%a, %d %b %Y %H:%M:%S %z')
+    except:
+
+        timeconverted = ' '.join(time2convert.split()[:-1])
     else:
-     timeconverted = datetime.strptime(time2convert, '%a, %d %b %Y %H:%M:%S %z')
-    return   timeconverted
+        timeconverted = datetime.strptime(time2convert, '%a, %d %b %Y %H:%M:%S %z')
+    return timeconverted
+
 
 def decode_mime_words(encoded_str):
     decoded_words = email.header.decode_header(encoded_str)
@@ -144,6 +149,7 @@ def fetch_all_emails():
                 # Extract relevant information
                 email_id_str = email_id.decode()
                 email_date = convert_time(msg['Date'])
+                email_raw_date = msg['Date']
                 print(email_date)
                 sender_header = str(msg['from'])
                 recipient_header = str(msg['to'])
@@ -157,8 +163,9 @@ def fetch_all_emails():
                 if content:
                     # Write to file
                     with open('email_details.txt', 'a') as file:
-                        file.write(f"Email ID: {email_id_str}\n")
+
                         file.write(f"Date/time: {email_date}\n")
+                        file.write(f"Raw Date/time: {email_raw_date}\n")
                         file.write(f"Sender: {sender}\n")
                         file.write(f"Recipient: {recipient}\n")
                         file.write(f"Subject: {subject}\n")
@@ -168,23 +175,24 @@ def fetch_all_emails():
 
                         data = {
                             "fields": {
-                                "ID": f"{email_id_str}",
+                                "uid": f'{message_id}',
+                                "mailbox":f'{mailbox_name}',
                                 "Date": f"{email_date}",
+                                "raw_date": f"{email_raw_date}",
                                 "sender": f"{sender}",
                                 "recipient": f"{recipient}",
                                 "subject": f"{subject}",
                                 "content": f"{content}",
-                                "uid": f'{message_id}',
+
                                 # Add other fields here
 
                             }
                         }
-                    response = requests.post(url2, headers=headers, data=json.dumps(data))
-                    if response.status_code == 200:
-
-                        pass
-                    else:
-                        print("Airtable post error")
+                        response = requests.post(url2, headers=headers, data=json.dumps(data))
+                        if response.status_code == 200:
+                            pass
+                        else:
+                            print("Airtable post error", {e})
                 else:
                     pass
         return

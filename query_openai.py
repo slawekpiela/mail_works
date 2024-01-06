@@ -1,13 +1,14 @@
 import time
 from openai import OpenAI
-from configuration import api_key, assistant_id,Models
+from configuration import api_key, assistant_id, assistant_id3, assistant_id4, Models
 
 client = OpenAI(api_key=api_key)
+print ("start query")
+thread = client.beta.threads.create()
 
-
-def query_model(prompt):
-    thread = client.beta.threads.create()
-
+def query_model(prompt, instructions, assistant_type):
+    #thread = client.beta.threads.create()
+    print(thread)
     message = client.beta.threads.messages.create(
         thread_id=thread.id,
         role="user",
@@ -18,8 +19,8 @@ def query_model(prompt):
 
     run = client.beta.threads.runs.create(
         thread_id=thread.id,
-        assistant_id=assistant_id,
-        instructions="You are helpfull assistant. Answer in the shortest way possible. Answer only based on information in the files. Answer in Polish language. If you do not find answer in the files say 'I do not know the answer' ",
+        assistant_id=assistant_id3,
+        instructions=instructions
 
         #tools=[{"type": "retrieval"}]
     )
@@ -37,8 +38,13 @@ def query_model(prompt):
      count=count+1
      time.sleep(1)
 
-    messages = client.beta.threads.messages.list(thread_id=thread.id) # ststus is completes. get completion
+    messages = client.beta.threads.messages.list(thread_id=thread.id) # ststus is complete. get completion
 
     result= messages.data[0].content[0].text.value # extract text from cpmpletion
     full_result= messages
-    return result, full_result
+
+    return result, full_result, thread
+
+
+
+

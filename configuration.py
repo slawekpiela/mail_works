@@ -25,6 +25,8 @@ def _get_config():
 _config = _get_config()
 api_key = _config["API"]["key"]
 assistant_id = _config["API"]["assistant_id"]
+assistant_id3 = _config["API"]["assistant_id3"]
+assistant_id4 = _config["API"]["assistant_id4"]
 sender_passwords = _config["Mail"]["sender_passwords"]
 user_mail = _config["Mail"]["user_mail"]
 engine = _config["Engines"]["GPT4"]
