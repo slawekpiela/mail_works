@@ -4,9 +4,18 @@ import re
 import requests
 import json
 import email.header
+from datetime import datetime
 from bs4 import BeautifulSoup
 from configuration import sender_passwords, user_mail, airtable_token, base_id, table_id2
 
+def convert_time(time2convert):
+    try
+     timeconverted= datetime.strptime(time2convert, '%a, %d %b %Y %H:%M:%S %z')
+    except
+     sender_passwords
+    else:
+     timeconverted = datetime.strptime(time2convert, '%a, %d %b %Y %H:%M:%S %z')
+    return   timeconverted
 
 def decode_mime_words(encoded_str):
     decoded_words = email.header.decode_header(encoded_str)
@@ -134,11 +143,10 @@ def fetch_all_emails():
 
                 # Extract relevant information
                 email_id_str = email_id.decode()
-
+                email_date = convert_time(msg['Date'])
+                print(email_date)
                 sender_header = str(msg['from'])
                 recipient_header = str(msg['to'])
-                subject_header = str(msg['subject'])
-
                 sender = extract_email_address(sender_header)
                 recipient = extract_email_address(recipient_header)
                 subject = decode_mime_words(str(msg['subject']))
@@ -147,9 +155,10 @@ def fetch_all_emails():
                 print('\r', email_id, end='')
 
                 if content:
-                # Write to file
+                    # Write to file
                     with open('email_details.txt', 'a') as file:
                         file.write(f"Email ID: {email_id_str}\n")
+                        file.write(f"Date/time: {email_date}\n")
                         file.write(f"Sender: {sender}\n")
                         file.write(f"Recipient: {recipient}\n")
                         file.write(f"Subject: {subject}\n")
@@ -160,6 +169,7 @@ def fetch_all_emails():
                         data = {
                             "fields": {
                                 "ID": f"{email_id_str}",
+                                "Date": f"{email_date}",
                                 "sender": f"{sender}",
                                 "recipient": f"{recipient}",
                                 "subject": f"{subject}",
@@ -176,7 +186,7 @@ def fetch_all_emails():
                     else:
                         print("Airtable post error")
                 else:
-                     pass
+                    pass
         return
 
 
