@@ -31,7 +31,7 @@ def query_model(prompt, instructions):
 
     run = client.beta.threads.runs.create(
         thread_id=thread.id,
-        assistant_id=str(assistant_id3),
+        assistant_id=str(assistant_id4),
         instructions=instructions
 
         #tools=[{"type": "retrieval"}]

@@ -2,11 +2,11 @@ import streamlit as st
 from query_openai import query_model
 import os
 
-assist=os.getenv('assistant_id3')
+assist=os.getenv('assistant_id4')
 apik = os.getenv('api_key')
 
 # Streamlit app title
-st.title("KOIOS v5")
+st.title("KOIOS v6")
 col1, col2  = st.columns([3,1])
 
 # Text input for prompt
