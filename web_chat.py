@@ -2,8 +2,8 @@ import streamlit as st
 from query_openai import query_model
 import os
 
-assist=os.getenv('assistant_id4')
-apik = os.getenv('api_key')
+assist=str(os.getenv('assistant_id4'))
+apik = str(os.getenv('api_key'))
 
 # Streamlit app title
 st.title("KOIOS v7")
