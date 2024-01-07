@@ -22,7 +22,7 @@ with col2:
 
 # Button to submit prompt
 if st.button("Submit"):
-    st.write("assystent: "assist, type(assist))
+    st.write("assystent: ",assist, type(assist))
     st.write("apik: ",apik, type(apik))
     if prompt:
         instructions = "you chat with me. if you find nothing in the files, search internet"
