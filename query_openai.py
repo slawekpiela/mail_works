@@ -6,7 +6,7 @@ from openai import OpenAI
 
 api_key = os.getenv('api_key')
 assistant_id = os.getenv('assistant_id'),
-assistant_id3 = os.getenv('assistant_id3'),
+assistant_id3 = str(os.getenv('assistant_id3')),
 assistant_id4 = os.getenv('assistant_id4'),
 
 
