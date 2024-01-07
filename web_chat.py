@@ -21,7 +21,7 @@ with col2:
 
 # Button to submit prompt
 if st.button("Submit"):
-    st.write()
+    st.write(assist)
     if prompt:
         instructions = "you chat with me. if you find nothing in the files, search internet"
         #assistant_type = "GPT3"
