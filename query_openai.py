@@ -14,7 +14,7 @@ assistant_id4 = os.getenv('assistant_id4'),
 client = OpenAI(api_key=api_key)
 
 
-# thread = client.beta.threads.create()
+thread = client.beta.threads.create()
 
 def query_model(prompt, instructions, assistent):
     # message = client.beta.threads.messages.create(
