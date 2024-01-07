@@ -3,14 +3,11 @@ from query_openai import query_model
 import os
 
 assistent = str(os.getenv('assistant_id4'))
-apik = str(os.getenv('api_key'))
-apik_t = str(type(apik))
-assist_t = str(type(assistent))
-assist_pr = assistent + " " +assist_t
-apik_pr = apik + " "+  apik_t
+#api_key = str(os.getenv('api_key'))
+
 
 # Streamlit app title
-st.title("KOIOS v7")
+st.title("KOIOS v0.1")
 col1, col2 = st.columns([3, 1])
 
 # Text input for prompt
