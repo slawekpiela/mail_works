@@ -2,14 +2,16 @@ import streamlit as st
 from query_openai import query_model
 import os
 
-assist=str(os.getenv('assistant_id4'))
+assistent = str(os.getenv('assistant_id4'))
 apik = str(os.getenv('api_key'))
 apik_t = type(apik)
-assist_t= type(assist)
+assist_t = type(assist)
+assist_pr = assistent + " " +assist_t
+apik_pr = apik + " "+  apik_t
 
 # Streamlit app title
 st.title("KOIOS v7")
-col1, col2  = st.columns([3,1])
+col1, col2 = st.columns([3, 1])
 
 # Text input for prompt
 prompt = st.text_input("Prompt:", "")
@@ -24,11 +26,11 @@ with col2:
 
 # Button to submit prompt
 if st.button("Submit"):
-    st.write("assystent: ",assist, assist_t)
-    st.write("apik: ",apik, apik_t)
+    st.write("assystent_pr: ", assist_pr)
+    st.write("apik_pr: ", apik_pr)
     if prompt:
         instructions = "you chat with me. if you find nothing in the files, search internet"
-        #assistant_type = "GPT3"
+        # assistant_type = "GPT3"
         response_ai, full_response, thread = query_model(prompt, instructions)
         with col1:
             st.write("Response:", response_ai)
