@@ -1,8 +1,11 @@
 import streamlit as st
 from query_openai import query_model
+import os
+
+assist=os.getenv('assistant_id3')
 
 # Streamlit app title
-st.title("KOIOS v3")
+st.title("KOIOS v4")
 col1, col2  = st.columns([3,1])
 
 # Text input for prompt
@@ -18,6 +21,7 @@ with col2:
 
 # Button to submit prompt
 if st.button("Submit"):
+    st.write()
     if prompt:
         instructions = "you chat with me. if you find nothing in the files, search internet"
         #assistant_type = "GPT3"
