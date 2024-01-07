@@ -17,9 +17,10 @@ def initialize_session_data():
 
 initialize_session_data()
 
-# draw the page
-assistant=os.getenv('assistent_id4')
 
+assistant = str(os.getenv('assistant_id4'))
+
+# draw the page
 st.title("KOIOS v0.1")
 if 'session_id' not in st.session_state:
     st.session_state['session_id'] = str(uuid.uuid4())
