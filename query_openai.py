@@ -1,7 +1,7 @@
 import time
 import os
 from openai import OpenAI
-from configuration import api_key, assistant_id, assistant_id3, assistant_id4, Models
+#from configuration import api_key, assistant_id, assistant_id3, assistant_id4, Models
 
 
 api_key = os.getenv('api_key')
