@@ -27,7 +27,7 @@ def query_model(prompt, instructions):
 
     run = client.beta.threads.runs.create(
         thread_id=thread.id,
-        assistant_id=assistant_id3,
+        assistant_id=assistant_id,
         instructions=instructions
 
         #tools=[{"type": "retrieval"}]
