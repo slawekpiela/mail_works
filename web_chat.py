@@ -1,5 +1,4 @@
 import streamlit as st
-import openai
 from query_openai import query_model
 
 # Streamlit app title
