@@ -17,7 +17,7 @@ print("assist ids: ", api_key, assistant_id, assistant_id3, assistant_id4)
 
 thread = client.beta.threads.create()
 
-def query_model(prompt, instructions):
+def query_model(prompt, instructions, assistent):
     #thread = client.beta.threads.create()
 
     message = client.beta.threads.messages.create(
@@ -30,7 +30,7 @@ def query_model(prompt, instructions):
 
     run = client.beta.threads.runs.create(
         thread_id=thread.id,
-        assistant_id=str(assistant_id4),
+        assistant_id=assistent,
         instructions=instructions
 
         #tools=[{"type": "retrieval"}]
