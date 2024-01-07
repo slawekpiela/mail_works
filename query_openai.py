@@ -19,8 +19,7 @@ thread = client.beta.threads.create()
 
 def query_model(prompt, instructions):
     #thread = client.beta.threads.create()
-    print(assistant_id, assistant_id3, assistant_id4)
-    print(thread)
+
     message = client.beta.threads.messages.create(
         thread_id=thread.id,
         role="user",

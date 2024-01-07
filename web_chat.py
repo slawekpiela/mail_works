@@ -6,7 +6,7 @@ assist=os.getenv('assistant_id4')
 apik = os.getenv('api_key')
 
 # Streamlit app title
-st.title("KOIOS v6")
+st.title("KOIOS v7")
 col1, col2  = st.columns([3,1])
 
 # Text input for prompt
@@ -22,8 +22,8 @@ with col2:
 
 # Button to submit prompt
 if st.button("Submit"):
-    st.write(assist)
-    st.write("apik",apik)
+    st.write("assystent: "assist, type(assist))
+    st.write("apik: ",apik, type(apik))
     if prompt:
         instructions = "you chat with me. if you find nothing in the files, search internet"
         #assistant_type = "GPT3"
