@@ -2,7 +2,7 @@ import streamlit as st
 from query_openai import query_model
 
 # Streamlit app title
-st.title("KOIOS czat")
+st.title("KOIOS v1")
 col1, col2  = st.columns([3,1])
 
 # Text input for prompt
