@@ -1,16 +1,40 @@
 import streamlit as st
+from query_openai import query_model
+import os
 
-# Initialize session state for storing appended text if it doesn't already exist
-if 'appended_text' not in st.session_state:
-    st.session_state['appended_text'] = ''
+assistant = str(os.getenv('assistant_id4'))
 
-# Text input for new text
-new_text = st.text_input("Enter text to append:")
+# Streamlit app title
+st.title("KOIOS v0.1")
+col1, col2 = st.columns([3, 1])
 
-# Button to append the text
-if st.button("Append Text"):
-    # Append new text to the existing text
-    st.session_state['appended_text'] += new_text + '\n'  # Adding a newline for separation
+# Initialize session state for thread if it doesn't already exist
+if 'thread_id' not in st.session_state:
+    st.session_state['thread_id'] = None
 
-# Display the appended text with red color using Markdown and HTML
-st.markdown(f"<p style='color: red;'>{st.session_state['appended_text']}</p>", unsafe_allow_html=True)
+# Text input for prompt
+prompt = st.text_input("Prompt:", "")
+
+with col1:
+    st.write("Response:", "")
+    st.write("Full Response:", "")
+    st.write("Thread Trace:", "")
+
+with col2:
+    choice1 = st.radio("Wybierz model AI: ", ['GPT', 'Anton'])
+
+# Button to submit prompt
+if st.button("Submit"):
+    if prompt:
+        instructions = "you chat with me. if you find nothing in the files, search internet"
+
+        # Pass the existing thread ID (if any) to the query model
+        response_ai, full_response, thread = query_model(prompt, instructions, assistant, st.session_state['thread_id'])
+
+        # Update the session state with the new thread ID
+        st.session_state['thread_id'] = thread.id if thread else None
+
+        with col1:
+            st.write("Response:", response_ai)
+            st.write("Full Response:", full_response)
+            st.write("Thread Trace:", thread.id if thread else "No thread")
