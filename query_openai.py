@@ -12,21 +12,20 @@ assistant_id4 = os.getenv('assistant_id4'),
 
 
 client = OpenAI(api_key=api_key)
-print ("start query")
-print("assist ids: ", api_key, assistant_id, assistant_id3, assistant_id4)
 
-thread = client.beta.threads.create()
+
+#thread = client.beta.threads.create()
 
 def query_model(prompt, instructions, assistent):
-    #thread = client.beta.threads.create()
+    thread = client.beta.threads.create()
 
-    message = client.beta.threads.messages.create(
-        thread_id=thread.id,
-        role="user",
-        content=prompt
-    )
+    # message = client.beta.threads.messages.create(
+    #     thread_id=thread.id,
+    #     role="user",
+    #     content=prompt
+    # )
 
-    thread_messages = client.beta.threads.messages.list(thread.id)
+    #thread_messages = client.beta.threads.messages.list(thread.id)
 
     run = client.beta.threads.runs.create(
         thread_id=thread.id,
