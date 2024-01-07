@@ -18,7 +18,7 @@ initialize_session_data()
 # draw the page
 
 st.title("KOIOS v0.1")
-if {st.session_state['session_id']}:
+if st.session_state:
  st.write(f"Session ID: {st.session_state['session_id']}")
 else:
  st.write("wating for session")
