@@ -5,9 +5,9 @@ from openai import OpenAI
 
 
 api_key = os.getenv('api_key')
-assitant_id = os.getenv('assistant_id'),
-assitant_id3 = os.getenv('assistant_id3'),
-assitant_id4 = os.getenv('assistant_id4'),
+assistant_id = os.getenv('assistant_id'),
+assistant_id3 = os.getenv('assistant_id3'),
+assistant_id4 = os.getenv('assistant_id4'),
 
 
 client = OpenAI(api_key=api_key)
