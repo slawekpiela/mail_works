@@ -18,7 +18,7 @@ st.write(f"Session ID: {st.session_state['session_id']}")
 col1, col2 = st.columns([3, 1])
 
 # Text input for prompt
-prompt = st.text_input("Prompt:", "")
+prompt = st.text_input("Prompt:")
 
 with col1:
     st.write("Response:", "")
