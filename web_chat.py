@@ -18,14 +18,12 @@ def initialize_session_data():
 initialize_session_data()
 
 # draw the page
+assistant=os.getenv('assistent_id4')
 
 st.title("KOIOS v0.1")
 if 'session_id' not in st.session_state:
     st.session_state['session_id'] = str(uuid.uuid4())
-try:
- st.write(f"Session ID: {st.session_state['session_id']}")
-except:
- st.write("wating for session")
+
 
 col1, col2 = st.columns([3, 1])
 with col1:
@@ -37,8 +35,16 @@ with col2:
 
 # Example of handling other session-specific data
 prompt = st.text_input("Prompt:")
-if st.button('Update Data'):
+if st.button('Send'):
     st.session_state['user_data']['prompt'] = prompt
 
 if st.session_state['user_data']['prompt']:
+    instructions = "you chat with me. if you find nothing in the files, search internet"
+
+    response_ai, full_response, thread = query_model(prompt, instructions, assistant)
+    with col1:
+        st.write("Response:", response_ai)
+        # st.write("Full Response:", full_response)
+        st.write("Thread Trace:", thread.id)
+
     st.write(f"You entered: {st.session_state['user_data']['prompt']}")
