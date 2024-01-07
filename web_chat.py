@@ -21,7 +21,7 @@ if st.button("Submit"):
     if prompt:
         instructions = "you chat with me. if you find nothing in the files, search internet"
         assistant_type = "GPT3"
-        response_ai, full_response, thread = query_model(prompt, instructions, assistant_type)
+        response_ai, full_response, thread = query_model(prompt, instructions)
         with col1:
             st.write("Response:", response_ai)
             st.write("Full Response:", full_response)
