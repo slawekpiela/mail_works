@@ -1,5 +1,7 @@
 import streamlit as st
-
+from query_openai import query_model
+import os
+import uuid
 
 # Function to initialize session-specific data
 def initialize_session_data():
@@ -18,6 +20,8 @@ initialize_session_data()
 # draw the page
 
 st.title("KOIOS v0.1")
+if 'session_id' not in st.session_state:
+    st.session_state['session_id'] = str(uuid.uuid4())
 try:
  st.write(f"Session ID: {st.session_state['session_id']}")
 except:
