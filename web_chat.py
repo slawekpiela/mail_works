@@ -5,7 +5,7 @@ import os
 assistent = str(os.getenv('assistant_id4'))
 apik = str(os.getenv('api_key'))
 apik_t = type(apik)
-assist_t = type(assist)
+assist_t = type(assistent)
 assist_pr = assistent + " " +assist_t
 apik_pr = apik + " "+  apik_t
 
