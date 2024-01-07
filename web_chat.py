@@ -22,7 +22,7 @@ prompt = st.text_input("Prompt:", "")
 
 with col1:
     st.write("Response:", "")
-    st.write("Full Response:", "")
+    #st.write("Full Response:", "")
     st.write("Thread Trace:", "")
 
 with col2:
@@ -36,5 +36,5 @@ if st.button("Submit"):
         response_ai, full_response, thread = query_model(prompt, instructions, assistant)
         with col1:
             st.write("Response:", response_ai)
-            st.write("Full Response:", full_response)
+            #st.write("Full Response:", full_response)
             st.write("Thread Trace:", thread.id)
