@@ -18,7 +18,7 @@ client = OpenAI(api_key=api_key)
 
 
 def query_model(prompt, instructions, assistent,thread):
-    if thread=='':
+    if thread is None:
         thread = client.beta.threads.create()
 
     message = client.beta.threads.messages.create(

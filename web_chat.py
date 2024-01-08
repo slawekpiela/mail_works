@@ -12,7 +12,7 @@ def initialize_session_data():
         st.session_state['user_data'] = {
             'prompt': '',
             'instructions': '',
-            'thread': '',
+            'thread': None,
             'assistant': None
         }
 
@@ -22,7 +22,7 @@ initialize_session_data()
 # Initialize session data
 
 initialize_session_data()
-
+thread='session strat'
 assistant = str(assistant_id3)  # str(os.getenv('assistant_id4'))
 
 # draw the page
@@ -47,20 +47,23 @@ if st.button('Send'):
     st.session_state['user_data']['prompt'] = prompt
     st.session_state['user_data']['instructions'] = instructions
     st.session_state['user_data']['assistant'] = assistant
+    st.write("thread value after send pressed", thread)
 
 if st.session_state['user_data']['prompt']:
-    response_ai, full_response, thread_from_query = query_model(
+    response_ai, full_response, thread_back = query_model(
         st.session_state['user_data']['prompt'],
         st.session_state['user_data']['instructions'],
         st.session_state['user_data']['assistant'],
         st.session_state['user_data']['thread']
     )
-    temp_thread = thread_from_query
-    st.session_state['user_data']['thread'] = thread_from_query
 
+    #st.session_state['user_data']['thread'] = thread.id
 
-    with col1:
+st.write("session id pulled from query_model:",thread_back)
+st.session_state['user_data']['thread'] = thread_back
+
+with col1:
         st.write("Response:", response_ai)
         st.write("Thread Trace:",  st.session_state['user_data']['thread'])
-        st.write("TFQ: ",thread_from_query)
+
 
