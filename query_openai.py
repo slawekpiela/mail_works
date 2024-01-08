@@ -3,27 +3,31 @@ import time
 import os
 from openai import OpenAI
 
-# from configuration import api_key, assistant_id, assistant_id3, assistant_id4, Models
+from configuration import api_key, assistant_id, assistant_id3, assistant_id4, Models
 
+api_key = api_key
 # form env
-api_key = os.getenv('api_key')
-assistant_id = os.getenv('assistant_id'),
-assistant_id3 = os.getenv('assistant_id3'),
-assistant_id4 = os.getenv('assistant_id4'),
+# api_key = os.getenv('api_key')
+# assistant_id = os.getenv('assistant_id'),
+# assistant_id3 = os.getenv('assistant_id3'),
+# assistant_id4 = os.getenv('assistant_id4'),
 
 client = OpenAI(api_key=api_key)
 
+#thread = client.beta.threads.create()
 
-thread = client.beta.threads.create()
 
-def query_model(prompt, instructions, assistent):
-    # message = client.beta.threads.messages.create(
-    #     thread_id=thread.id,
-    #     role="user",
-    #     content=prompt
-    # )
+def query_model(prompt, instructions, assistent,thread):
+    if thread=='':
+        thread = client.beta.threads.create()
 
-    # thread_messages = client.beta.threads.messages.list(thread.id)
+    message = client.beta.threads.messages.create(
+        thread_id=thread.id,
+        role="user",
+        content=prompt
+    )
+
+    thread_messages = client.beta.threads.messages.list(thread.id)
 
     run = client.beta.threads.runs.create(
         thread_id=thread.id,
@@ -51,4 +55,4 @@ def query_model(prompt, instructions, assistent):
     result = messages.data[0].content[0].text.value  # extract text from cpmpletion
     full_result = messages
 
-    return result, full_result, thread
+    return result, full_result, thread.id
