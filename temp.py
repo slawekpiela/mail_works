@@ -1,40 +1,61 @@
-import streamlit as st
-from query_openai import query_model
+import string
+import time
 import os
-import uuid
+from openai import OpenAI
 
-assistant = str(os.getenv('assistant_id4'))
+from configuration import api_key, assistant_id, assistant_id3, assistant_id4, Models
 
-# Streamlit app title
-st.title("KOIOS v0.1")
+api_key = api_key
+# form env
+# api_key = os.getenv('api_key')
+# assistant_id = os.getenv('assistant_id'),
+# assistant_id3 = os.getenv('assistant_id3'),
+# assistant_id4 = os.getenv('assistant_id4'),
 
-# Initialize or retrieve the session ID
-if 'session_id' not in st.session_state:
-    st.session_state['session_id'] = str(uuid.uuid4())
+client = OpenAI(api_key=api_key)
 
-# Display the session ID
-st.write(f"Session ID: {st.session_state['session_id']}")
 
-col1, col2 = st.columns([3, 1])
+# thread = client.beta.threads.create()
 
-# Text input for prompt
-prompt = st.text_input("Prompt:")
 
-with col1:
-    st.write("Response:", "")
-    # st.write("Full Response:", "")
-    st.write("Thread Trace:", "")
+def query_model(prompt, instructions, assistent, thread):
+    print("tki wątek podano do query model: ",thread)
 
-with col2:
-    choice1 = st.radio("Wybierz model AI: ", ['GPT', 'Anton'])
+    try:
+        thread = client.beta.threads.create()
 
-# Button to submit prompt
-if st.button("Submit"):
-    if prompt:
-        instructions = "you chat with me. if you find nothing in the files, search internet"
+        message = client.beta.threads.messages.create(
+            thread_id=thread.id,
+            role="user",
+            content=prompt
+        )
+    except:
+        thread_messages = client.beta.threads.messages.list(thread)
 
-        response_ai, full_response, thread = query_model(prompt, instructions, assistant)
-        with col1:
-            st.write("Response:", response_ai)
-            # st.write("Full Response:", full_response)
-            st.write("Thread Trace:", thread.id)
+    run = client.beta.threads.runs.create(
+        thread_id=thread.id,
+        assistant_id=assistent,
+        instructions=instructions
+
+        # tools=[{"type": "retrieval"}]
+    )
+    print("\n a to jest thread.id: ",thread.id)
+    status = "start"
+    count = 0
+    print("\n")
+    while status != "completed":
+        result = client.beta.threads.runs.retrieve(
+            thread_id=thread.id,
+            run_id=run.id
+        )
+        status = result.status
+        print("\rStatus: ", status, count, end="")  # "Status",count, result.status, end="\r")  # print current status
+        count = count + 1
+        time.sleep(1)
+
+    messages = client.beta.threads.messages.list(thread_id=thread.id)  # ststus is complete. get completion
+
+    result = messages.data[0].content[0].text.value  # extract text from cpmpletion
+    full_result = messages
+    print("taki watek qm zwraca: ", thread.id)
+    return result, full_result, thread.id
