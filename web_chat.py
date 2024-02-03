@@ -10,7 +10,8 @@ if 'session_id' not in st.session_state:
     st.session_state['input_key'] = 0  # Initialize a key for the input
 
 st.title("KOIOS v0.2")
-col1, col2 = st.columns([3, 1])
+col1, col2 = st.colum"ns([3, 1])
+st.write("test",st.session_state['input_key'])
 
 # Main Function
 def main():
@@ -33,12 +34,13 @@ def main():
         with col1:
             st.write("Response:", response_ai)
             st.session_state['input_key'] += 1
+            st.session_state['input_key'] += 1
         # Increment the key to reset the text input
-
 
     # Display session information
     st.write("Session ID:", st.session_state['session_id'])
     st.write("Thread ID:", st.session_state['thread_id'])
+
 
 if __name__ == "__main__":
     main()
