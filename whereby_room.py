@@ -1,6 +1,8 @@
 import requests
 import json
 from configuration import whereby_api_key
+import streamlit as st
+
 
 API_KEY = whereby_api_key
 
